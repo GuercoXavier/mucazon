@@ -71,4 +71,14 @@ public class UserService {
 
         return userDTO;
     }
+
+    public boolean removeUser(String idCard){
+        for(UserDTO user : users){
+            if (user.getIdCard().equals(idCard)){
+                users.remove(user);
+                return true;
+            }
+        }
+        return false;
+    }
 }

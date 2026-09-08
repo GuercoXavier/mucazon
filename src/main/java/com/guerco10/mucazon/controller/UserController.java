@@ -37,4 +37,9 @@ public class UserController {
         return userService.addUser(userDTO);
     }
 
+    @DeleteMapping("/user/{idCard}")
+    boolean deleteUser(@PathVariable String idCard){
+        return userService.removeUser(idCard);
+    }
+
 }
