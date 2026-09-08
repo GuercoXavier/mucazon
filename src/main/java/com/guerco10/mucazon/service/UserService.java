@@ -10,7 +10,7 @@ import java.util.List;
 public class UserService {
     public static List<UserDTO> users = new ArrayList<>();
 
-    @PostConstruct
+//    @PostConstruct
     public void initializeList(){
         UserDTO userDto = new UserDTO();
 
@@ -39,8 +39,26 @@ public class UserService {
         userDto3.setPhone("82476749");
         userDto3.setRegistryDate(new Date());
 
+        UserDTO userDto4 = new UserDTO();
+
+        userDto4.setName("John Doe");
+        userDto4.setIdCard("100");
+        userDto4.setAddress("imagiLand");
+        userDto4.setEmail("john@email.com");
+        userDto4.setPhone("25577431");
+        userDto4.setRegistryDate(new Date());
+
         users.add(userDto);
         users.add(userDto2);
         users.add(userDto3);
+        users.add(userDto4);
+    }
+
+    public UserDTO getUser(String idCard){
+        for(UserDTO user : users){
+            if(user.getIdCard().equals(idCard)) return user;
+        }
+
+        return null;
     }
 }
