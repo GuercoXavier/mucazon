@@ -1,7 +1,6 @@
 package com.guerco10.mucazon.service;
 
 import com.guerco10.mucazon.dto.UserDTO;
-import jakarta.annotation.PostConstruct;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -9,6 +8,10 @@ import java.util.List;
 
 public class UserService {
     public static List<UserDTO> users = new ArrayList<>();
+
+    public UserService(){
+        this.initializeList();
+    }
 
 //    @PostConstruct
     public void initializeList(){
@@ -60,5 +63,12 @@ public class UserService {
         }
 
         return null;
+    }
+
+    public UserDTO addUser(UserDTO userDTO){
+        userDTO.setRegistryDate(new Date());
+        users.add(userDTO);
+
+        return userDTO;
     }
 }
