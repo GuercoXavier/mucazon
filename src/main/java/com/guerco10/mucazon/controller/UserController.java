@@ -2,15 +2,20 @@ package com.guerco10.mucazon.controller;
 
 import com.guerco10.mucazon.dto.UserDTO;
 import com.guerco10.mucazon.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static com.guerco10.mucazon.service.UserService.users;
-
 @RestController
 public class UserController {
-    private final UserService userService = new UserService();
+    @Autowired
+    private UserService userService;
+
+    //injection via constructor
+//    public UserController(UserService userService){
+//        this.userService = userService;
+//    }
 
     // this controller is just to test if it is working or not
     @GetMapping("/")
@@ -22,24 +27,38 @@ public class UserController {
     public List<UserDTO> getUsers(){
 //        UserService userService = new UserService();
 //        userService.initializeList();
-        return users;
+        return userService.getAll();
     }
 
     // gets a specific user
-    @GetMapping("/users/{idCard}")
-    public UserDTO getUser(@PathVariable String idCard){
-        return userService.getUser(idCard);
+    @GetMapping("/users/{id}")
+    public UserDTO getUserById(@PathVariable Long id){
+
+        return userService.findById(id);
+    }
+
+    @GetMapping("/users/idCard/{idCard}")
+    public UserDTO getUserByIdCard(@PathVariable String idCard){
+
+        return userService.findByIdCard(idCard);
+    }
+
+    @GetMapping("user/search")
+    List<UserDTO> queryByName(@RequestParam(name = "name", required = true) String name){
+        //required is true by default but just to make it clearer we'll keep like this
+        return userService.queryByName(name);
     }
 
     @PostMapping("/newUser")
     UserDTO addUser(@RequestBody UserDTO userDTO){
 
-        return userService.addUser(userDTO);
+        return userService.save(userDTO);
     }
 
-    @DeleteMapping("/user/{idCard}")
-    boolean deleteUser(@PathVariable String idCard){
-        return userService.removeUser(idCard);
+    @DeleteMapping("/user/{id}")
+    UserDTO deleteUser(@PathVariable long id){
+
+        return userService.delete(id);
     }
 
 }
