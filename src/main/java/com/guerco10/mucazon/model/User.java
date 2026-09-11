@@ -37,6 +37,8 @@ public class User {
         return user;
     }
 
+    // this method runs as a user is created 
+    // it just gives the new user the actual registry date
     @PrePersist
     public void setDate(){
         registrydate = new Date();
